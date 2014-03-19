@@ -1,0 +1,16 @@
+[
+{
+  "modid": "creativeadditions",
+  "name": "Creative Additions",
+  "description": "This is Creative Additions, a mod which helps you a whole bunch if you work on the creative side",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["MrSourceCoded"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
