@@ -1,6 +1,6 @@
-package sourcecoded.mods.creativeAdditions.client;
+package creativeAdditions.client;
  
-import sourcecoded.mods.creativeAdditions.common.CommonProxy;
+import creativeAdditions.common.CommonProxy;
  
 public class ClientProxy extends CommonProxy {
         @Override

@@ -1,4 +1,4 @@
-package sourcecoded.mods.creativeAdditions.commands;
+package creativeAdditions.commands;
 
 import java.util.List;
 

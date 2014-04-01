@@ -1,4 +1,4 @@
-package sourcecoded.mods.creativeAdditions.shared;
+package creativeAdditions.shared;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;

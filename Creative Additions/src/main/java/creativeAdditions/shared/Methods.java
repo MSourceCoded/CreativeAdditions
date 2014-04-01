@@ -1,4 +1,4 @@
-package sourcecoded.mods.creativeAdditions.shared;
+package creativeAdditions.shared;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;

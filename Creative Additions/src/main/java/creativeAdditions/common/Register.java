@@ -1,22 +1,22 @@
-package sourcecoded.mods.creativeAdditions.common;
+package creativeAdditions.common;
 
 import net.minecraft.item.Item;
-import sourcecoded.mods.creativeAdditions.commands.BangCommand;
-import sourcecoded.mods.creativeAdditions.commands.BlockinfoCommand;
-import sourcecoded.mods.creativeAdditions.commands.CommandBlockCommand;
-import sourcecoded.mods.creativeAdditions.commands.CoordCommand;
-import sourcecoded.mods.creativeAdditions.commands.FSummonCommand;
-import sourcecoded.mods.creativeAdditions.commands.FacingCommand;
-import sourcecoded.mods.creativeAdditions.commands.GetTimeCommand;
-import sourcecoded.mods.creativeAdditions.commands.HeadCommand;
-import sourcecoded.mods.creativeAdditions.commands.KillEntitiesCommand;
-import sourcecoded.mods.creativeAdditions.commands.PlatformerCommand;
-import sourcecoded.mods.creativeAdditions.commands.RandomNCommand;
-import sourcecoded.mods.creativeAdditions.commands.RelativeCommand;
-import sourcecoded.mods.creativeAdditions.item.BlockHelperItem;
-import sourcecoded.mods.creativeAdditions.item.RemoteItem;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import creativeAdditions.commands.BangCommand;
+import creativeAdditions.commands.BlockinfoCommand;
+import creativeAdditions.commands.CommandBlockCommand;
+import creativeAdditions.commands.CoordCommand;
+import creativeAdditions.commands.FSummonCommand;
+import creativeAdditions.commands.FacingCommand;
+import creativeAdditions.commands.GetTimeCommand;
+import creativeAdditions.commands.HeadCommand;
+import creativeAdditions.commands.KillEntitiesCommand;
+import creativeAdditions.commands.PlatformerCommand;
+import creativeAdditions.commands.RandomNCommand;
+import creativeAdditions.commands.RelativeCommand;
+import creativeAdditions.item.BlockHelperItem;
+import creativeAdditions.item.RemoteItem;
 
 public class Register {		
 	public static final Item Remote = new RemoteItem();
@@ -27,7 +27,7 @@ public class Register {
 		GameRegistry.registerItem(BlockHelper, "BlockHelper");
 	}
 	
-	protected static void RegisterCommands(FMLServerStartingEvent event) {
+	public static void RegisterCommands(FMLServerStartingEvent event) {
 		event.registerServerCommand(new GetTimeCommand());
         event.registerServerCommand(new FSummonCommand());
         event.registerServerCommand(new KillEntitiesCommand());

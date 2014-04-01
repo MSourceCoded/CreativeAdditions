@@ -1,10 +1,10 @@
-package sourcecoded.mods.creativeAdditions.commands;
+package creativeAdditions.commands;
 
+import creativeAdditions.shared.Methods;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import sourcecoded.mods.creativeAdditions.shared.Methods;
 
 public class BangCommand extends CommandBase {
 

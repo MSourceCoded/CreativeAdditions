@@ -1,4 +1,4 @@
-package sourcecoded.mods.creativeAdditions.common;
+package creativeAdditions.common;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

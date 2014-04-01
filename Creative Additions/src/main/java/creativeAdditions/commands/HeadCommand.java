@@ -1,7 +1,8 @@
-package sourcecoded.mods.creativeAdditions.commands;
+package creativeAdditions.commands;
 
 import java.util.List;
 
+import creativeAdditions.shared.Methods;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +10,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import sourcecoded.mods.creativeAdditions.shared.Methods;
 
 public class HeadCommand extends CommandBase {
 

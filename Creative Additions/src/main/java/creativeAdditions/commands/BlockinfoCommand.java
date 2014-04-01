@@ -1,12 +1,12 @@
-package sourcecoded.mods.creativeAdditions.commands;
+package creativeAdditions.commands;
 
+import creativeAdditions.shared.Methods;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import sourcecoded.mods.creativeAdditions.shared.Methods;
 
 public class BlockinfoCommand extends CommandBase {
 

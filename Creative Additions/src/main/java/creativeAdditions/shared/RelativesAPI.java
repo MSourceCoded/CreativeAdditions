@@ -1,4 +1,4 @@
-package sourcecoded.mods.creativeAdditions.shared;
+package creativeAdditions.shared;
 
 public class RelativesAPI {
 

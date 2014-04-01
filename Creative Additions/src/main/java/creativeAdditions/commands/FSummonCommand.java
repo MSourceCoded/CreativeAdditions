@@ -1,14 +1,14 @@
-package sourcecoded.mods.creativeAdditions.commands;
+package creativeAdditions.commands;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import creativeAdditions.shared.Methods;
+import creativeAdditions.shared.Summoner;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityList;
 import net.minecraft.world.World;
-import sourcecoded.mods.creativeAdditions.shared.Methods;
-import sourcecoded.mods.creativeAdditions.shared.Summoner;
 
 public class FSummonCommand extends CommandBase {
 	

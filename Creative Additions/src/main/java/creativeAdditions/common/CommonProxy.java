@@ -1,4 +1,4 @@
-package sourcecoded.mods.creativeAdditions.common;
+package creativeAdditions.common;
  
 public class CommonProxy {
  

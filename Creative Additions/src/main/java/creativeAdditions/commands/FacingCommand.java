@@ -1,9 +1,9 @@
-package sourcecoded.mods.creativeAdditions.commands;
+package creativeAdditions.commands;
 
+import creativeAdditions.shared.Methods;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import sourcecoded.mods.creativeAdditions.shared.Methods;
 
 public class FacingCommand extends CommandBase {
 	
