@@ -1,4 +1,4 @@
-package creativeAdditions.shared;
+package sourcecoded.creativeA.shared;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;

@@ -1,4 +1,4 @@
-package creativeAdditions.item;
+package sourcecoded.creativeA.item;
 
 import java.util.List;
 
@@ -16,10 +16,10 @@ import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
 
+import sourcecoded.creativeA.common.Tabs;
+import sourcecoded.creativeA.shared.Methods;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import creativeAdditions.common.Tabs;
-import creativeAdditions.shared.Methods;
 
 public class BlockHelperItem extends Item {
 

@@ -1,4 +1,4 @@
-package creativeAdditions.item;
+package sourcecoded.creativeA.item;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
 
-import creativeAdditions.common.Tabs;
-import creativeAdditions.shared.Methods;
+import sourcecoded.creativeA.common.Tabs;
+import sourcecoded.creativeA.shared.Methods;
 
 public class RemoteItem extends Item {
 	

@@ -1,8 +1,8 @@
-package creativeAdditions.commands;
+package sourcecoded.creativeA.commands;
 
 import java.util.List;
 
-import creativeAdditions.shared.Methods;
+import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;

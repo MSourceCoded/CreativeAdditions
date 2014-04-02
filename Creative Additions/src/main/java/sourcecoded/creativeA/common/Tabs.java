@@ -1,4 +1,4 @@
-package creativeAdditions.common;
+package sourcecoded.creativeA.common;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

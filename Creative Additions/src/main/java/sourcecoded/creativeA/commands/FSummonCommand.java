@@ -1,10 +1,10 @@
-package creativeAdditions.commands;
+package sourcecoded.creativeA.commands;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import creativeAdditions.shared.Methods;
-import creativeAdditions.shared.Summoner;
+import sourcecoded.creativeA.shared.Methods;
+import sourcecoded.creativeA.shared.Summoner;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityList;

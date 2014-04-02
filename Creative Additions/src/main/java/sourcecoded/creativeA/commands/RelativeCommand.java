@@ -1,9 +1,9 @@
-package creativeAdditions.commands;
+package sourcecoded.creativeA.commands;
 
 import java.util.List;
 
-import creativeAdditions.shared.Methods;
-import creativeAdditions.shared.RelativesAPI;
+import sourcecoded.creativeA.shared.Methods;
+import sourcecoded.creativeA.shared.RelativesAPI;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;

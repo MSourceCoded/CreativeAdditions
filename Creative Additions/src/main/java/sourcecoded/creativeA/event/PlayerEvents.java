@@ -1,4 +1,4 @@
-package creativeAdditions.event;
+package sourcecoded.creativeA.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;

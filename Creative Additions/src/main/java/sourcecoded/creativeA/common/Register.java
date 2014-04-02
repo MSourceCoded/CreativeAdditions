@@ -1,22 +1,22 @@
-package creativeAdditions.common;
+package sourcecoded.creativeA.common;
 
+import sourcecoded.creativeA.commands.BangCommand;
+import sourcecoded.creativeA.commands.BlockinfoCommand;
+import sourcecoded.creativeA.commands.CommandBlockCommand;
+import sourcecoded.creativeA.commands.CoordCommand;
+import sourcecoded.creativeA.commands.FSummonCommand;
+import sourcecoded.creativeA.commands.FacingCommand;
+import sourcecoded.creativeA.commands.GetTimeCommand;
+import sourcecoded.creativeA.commands.HeadCommand;
+import sourcecoded.creativeA.commands.KillEntitiesCommand;
+import sourcecoded.creativeA.commands.PlatformerCommand;
+import sourcecoded.creativeA.commands.RandomNCommand;
+import sourcecoded.creativeA.commands.RelativeCommand;
+import sourcecoded.creativeA.item.BlockHelperItem;
+import sourcecoded.creativeA.item.RemoteItem;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import creativeAdditions.commands.BangCommand;
-import creativeAdditions.commands.BlockinfoCommand;
-import creativeAdditions.commands.CommandBlockCommand;
-import creativeAdditions.commands.CoordCommand;
-import creativeAdditions.commands.FSummonCommand;
-import creativeAdditions.commands.FacingCommand;
-import creativeAdditions.commands.GetTimeCommand;
-import creativeAdditions.commands.HeadCommand;
-import creativeAdditions.commands.KillEntitiesCommand;
-import creativeAdditions.commands.PlatformerCommand;
-import creativeAdditions.commands.RandomNCommand;
-import creativeAdditions.commands.RelativeCommand;
-import creativeAdditions.item.BlockHelperItem;
-import creativeAdditions.item.RemoteItem;
 
 public class Register {		
 	public static final Item Remote = new RemoteItem();

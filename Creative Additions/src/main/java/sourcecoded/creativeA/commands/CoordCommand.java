@@ -1,6 +1,6 @@
-package creativeAdditions.commands;
+package sourcecoded.creativeA.commands;
 
-import creativeAdditions.shared.Methods;
+import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;

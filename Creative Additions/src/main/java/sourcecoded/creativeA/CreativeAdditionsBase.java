@@ -1,13 +1,13 @@
-package creativeAdditions;
+package sourcecoded.creativeA;
 
+import sourcecoded.creativeA.common.Register;
+import sourcecoded.creativeA.event.PlayerEvents;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import creativeAdditions.common.Register;
-import creativeAdditions.event.PlayerEvents;
 
 @Mod(modid = CreativeAdditionsBase.MODID, version = CreativeAdditionsBase.VERSION, canBeDeactivated=true)
 public class CreativeAdditionsBase
