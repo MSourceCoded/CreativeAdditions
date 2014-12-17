@@ -3,11 +3,15 @@ package sourcecoded.creativeA.item;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
@@ -19,8 +23,8 @@ public class RemoteItem extends Item {
 	
 	public RemoteItem() {
 		setMaxStackSize(1);
-		setUnlocalizedName("Remote");
-		setTextureName("creativeadditions:remote");
+		setUnlocalizedName("remote");
+		//setTextureName("creativeadditions:remote");
 		setCreativeTab(Tabs.creativeAdditions);
 	}
 	
@@ -30,48 +34,52 @@ public class RemoteItem extends Item {
 	World world;
 	
 	
-	static void trigger(int x, int y, int z, int side, EntityPlayer player, World world, float xo, float yo, float zo) {
-		Block block = world.getBlock(x, y, z);
-		block.onBlockActivated(world, x, y, z, player, side, xo, yo, zo);
+	static void trigger(BlockPos pos, EnumFacing side, EntityPlayer player, World world, float xo, float yo, float zo) {
+		IBlockState block = world.getBlockState(pos);
+		block.getBlock().onBlockActivated(world, pos, block, player, side, xo, yo, zo);
 	}
 	
 	@Override
 	public void onUpdate(ItemStack itemstack, World world, Entity entity, int par4, boolean par5) {
-		spamTimer--;
+		if (spamTimer > 0)
+			spamTimer--;
 	}
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World var2, EntityPlayer var3) {
-		if (!Keyboard.isKeyDown(42) && spamTimer <=0 && (itemstack.stackTagCompound != null)) {			
+		if (!Keyboard.isKeyDown(42) && spamTimer <=0 && (itemstack.getTagCompound() != null) && !var2.isRemote) {
 			this.player = var3;
 			this.world = var2;
 			
-			int x = itemstack.stackTagCompound.getInteger("x");
-			int y = itemstack.stackTagCompound.getInteger("y");
-			int z = itemstack.stackTagCompound.getInteger("z");
-			int side = itemstack.stackTagCompound.getInteger("side");
-			float xo = itemstack.stackTagCompound.getFloat("xo");
-			float yo = itemstack.stackTagCompound.getFloat("yo");
-			float zo = itemstack.stackTagCompound.getFloat("zo");
-			
-			trigger(x, y, z, side, player, world, xo, yo, zo);
+			int x = itemstack.getTagCompound().getInteger("x");
+			int y = itemstack.getTagCompound().getInteger("y");
+			int z = itemstack.getTagCompound().getInteger("z");
+			int side = itemstack.getTagCompound().getInteger("side");
+			float xo = itemstack.getTagCompound().getFloat("xo");
+			float yo = itemstack.getTagCompound().getFloat("yo");
+			float zo = itemstack.getTagCompound().getFloat("zo");
+
+			BlockPos pos = new BlockPos(x, y, z);
+			trigger(pos, EnumFacing.values()[side], player, world, xo, yo, zo);
 			
 			spamTimer = 10;
-		} 
-		return itemstack;		
+		}
+		return itemstack;
 	}
 	
 	@Override
-	public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int side, float xo, float yo, float zo) {
-		if (Keyboard.isKeyDown(42)) {
-			itemstack.stackTagCompound = new NBTTagCompound();
-			itemstack.stackTagCompound.setInteger("x", x);
-			itemstack.stackTagCompound.setInteger("y", y);
-			itemstack.stackTagCompound.setInteger("z", z);
-			itemstack.stackTagCompound.setInteger("side", side);
-			itemstack.stackTagCompound.setFloat("xo", xo);
-			itemstack.stackTagCompound.setFloat("yo", yo);
-			itemstack.stackTagCompound.setFloat("zo", zo);
+	public boolean onItemUse(ItemStack itemstack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+		if (Keyboard.isKeyDown(42) && !worldIn.isRemote) {
+			itemstack.setTagCompound(new NBTTagCompound());
+			itemstack.getTagCompound().setInteger("x", pos.getX());
+			itemstack.getTagCompound().setInteger("y", pos.getY());
+			itemstack.getTagCompound().setInteger("z", pos.getZ());
+			itemstack.getTagCompound().setInteger("side", side.ordinal());
+			itemstack.getTagCompound().setFloat("xo", hitX);
+			itemstack.getTagCompound().setFloat("yo", hitY);
+			itemstack.getTagCompound().setFloat("zo", hitZ);
+
+			return true;
 		}
 		return false;
 	}
@@ -79,8 +87,8 @@ public class RemoteItem extends Item {
 	@Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void addInformation(ItemStack itemstack, EntityPlayer player, List par3List, boolean par4) {
-        if (itemstack.stackTagCompound != null) {
-        	String target = itemstack.stackTagCompound.getInteger("x") + ", " + itemstack.stackTagCompound.getInteger("y") + ", " + itemstack.stackTagCompound.getInteger("z");
+        if (itemstack.getTagCompound() != null) {
+        	String target = itemstack.getTagCompound().getInteger("x") + ", " + itemstack.getTagCompound().getInteger("y") + ", " + itemstack.getTagCompound().getInteger("z");
         	par3List.add("Target: " + target);
 
         }

@@ -1,5 +1,9 @@
 package sourcecoded.creativeA.commands;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.CommandException;
+import net.minecraft.util.BlockPos;
+import net.minecraftforge.common.property.IExtendedBlockState;
 import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandBase;
@@ -8,10 +12,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
+import java.util.Objects;
+
 public class BlockinfoCommand extends CommandBase {
 
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "blockinfo";
 	}
 
@@ -21,38 +27,32 @@ public class BlockinfoCommand extends CommandBase {
 	}
 
 	@Override
-	public void processCommand(ICommandSender var1, String[] var2) {
-		if (var2.length != 3) {
-			Methods.usage(var1, this);
+	public void execute(ICommandSender sender, String[] args) throws CommandException {
+		if (args.length != 3) {
+			Methods.usage(sender, this);
 		} else {
-			int x = (int)var1.getPlayerCoordinates().posX;
-			int y = (int)var1.getPlayerCoordinates().posY;
-			int z = (int)var1.getPlayerCoordinates().posZ;
-			
-			x = (int) CommandBase.func_110666_a(var1, (double)x, var2[0]);
-			y = (int) CommandBase.func_110666_a(var1, (double)y, var2[1]);
-			z = (int) CommandBase.func_110666_a(var1, (double)z, var2[2]);
-			
-			Block block = var1.getEntityWorld().getBlock(x, y, z);
+			BlockPos pos = func_175757_a(sender, args, 0, false);
+
+			IBlockState block = sender.getEntityWorld().getBlockState(pos);
 			TileEntity tile = null;
 			
 			NBTTagCompound nbt = new NBTTagCompound();
 			
-			if (var1.getEntityWorld().getTileEntity(x, y, z) != null) {
-				tile = var1.getEntityWorld().getTileEntity(x, y, z);				
+			if (sender.getEntityWorld().getTileEntity(pos) != null) {
+				tile = sender.getEntityWorld().getTileEntity(pos);
 				tile.writeToNBT(nbt);
 				nbt.removeTag("x");
 				nbt.removeTag("y");
 				nbt.removeTag("z");
 			} else {
-				nbt.setString("id", Block.blockRegistry.getNameForObject(block));
-				nbt.setInteger("Data", var1.getEntityWorld().getBlockMetadata(x, y, z));
+				nbt.setString("id", Objects.toString(Block.blockRegistry.getNameForObject(block.getBlock())));
+				nbt.setString("Data", block.getProperties().toString());			//TODO: Needs fixing
 			}
 			
 			Methods.setClip(nbt.toString());
 			
-			Methods.addChatMessage((EntityPlayer) var1, nbt.toString());
-			Methods.addChatMessage((EntityPlayer) var1, "NBT Copied to clipboard");
+			Methods.addChatMessage((EntityPlayer) sender, nbt.toString());
+			Methods.addChatMessage((EntityPlayer) sender, "NBT Copied to clipboard");
 		}
 	}
 

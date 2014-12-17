@@ -1,5 +1,8 @@
 package sourcecoded.creativeA.commands;
 
+import net.minecraft.block.BlockPackedIce;
+import net.minecraft.command.CommandException;
+import net.minecraft.util.BlockPos;
 import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -9,7 +12,7 @@ import net.minecraft.world.World;
 public class BangCommand extends CommandBase {
 
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "bang";
 	}
 
@@ -19,16 +22,18 @@ public class BangCommand extends CommandBase {
 	}
 
 	@Override
-	public void processCommand(ICommandSender var1, String[] var2) {
+	public void execute(ICommandSender var1, String[] var2) throws CommandException {
 		if (var2.length != 4) {
 			Methods.usage(var1, this);
 		} else {
 			World world = var1.getEntityWorld();
 			EntityPlayer player = (EntityPlayer) var1;
-			
-			double x = func_110666_a(var1, player.posX, var2[0]);
-			double y = func_110666_a(var1, player.posY, var2[1]);
-			double z = func_110666_a(var1, player.posZ, var2[2]);
+
+			BlockPos pos = func_175757_a(var1, var2, 0, false);
+
+			double x = pos.getX();
+			double y = pos.getY();
+			double z = pos.getZ();
 			
 			float power = Float.parseFloat(var2[3]);
 			

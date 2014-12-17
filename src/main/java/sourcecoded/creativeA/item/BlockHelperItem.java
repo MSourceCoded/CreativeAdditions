@@ -1,8 +1,10 @@
 package sourcecoded.creativeA.item;
 
 import java.util.List;
+import java.util.Objects;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -11,6 +13,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -32,7 +36,6 @@ public class BlockHelperItem extends Item {
 	public BlockHelperItem() {
 		setMaxStackSize(1);
 		setUnlocalizedName("blockhelper");
-		setTextureName("creativeadditions:blockhelper");
 		setHasSubtypes(true);
 		setMaxDamage(0);
 		setCreativeTab(Tabs.creativeAdditions);
@@ -50,27 +53,16 @@ public class BlockHelperItem extends Item {
 		spamTimer--;
 	}
 	
-	/*@Override
-	public ItemStack onItemRightClick(ItemStack itemstack, World var2, EntityPlayer var3) {
-		if (!Keyboard.isKeyDown(42) && spamTimer <=0) {	
-			this.player = Methods.playerEntity;
-			this.world = Methods.playerWorld;
-			
-			spamTimer = 10;
-		}
-		return itemstack;
-	}*/	
-	
 	@Override
-	public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int side, float xo, float yo, float zo) {
+	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (spamTimer <= 0) {
-			this.world = world;
-			this.player = player;
+			this.world = worldIn;
+			this.player = playerIn;
 			
 			if (Keyboard.isKeyDown(42)) {				
-				itemstack.stackTagCompound = new NBTTagCompound();
-				set(x, y, z, itemstack);
-				NBTTagCompound tags = itemstack.stackTagCompound;
+				stack.setTagCompound(new NBTTagCompound());
+				set(pos, stack);
+				NBTTagCompound tags = stack.getTagCompound();
 				
 				NBTTagCompound newTags = new NBTTagCompound();
 				newTags = (NBTTagCompound) tags.copy();
@@ -85,9 +77,9 @@ public class BlockHelperItem extends Item {
 				
 				NBTTagCompound fallingTags = new NBTTagCompound();
 				
-				if (itemstack.getItemDamage() == 0) {
+				if (stack.getItemDamage() == 0) {
 					commandString = "/setblock " + tags.getInteger("x") + " " + tags.getInteger("y") + " " + tags.getInteger("z") + " " + tags.getString("id") + " " + tags.getInteger("meta") + " replace " + newTags.toString();					
-				} else if (itemstack.getItemDamage() == 1) {
+				} else if (stack.getItemDamage() == 1) {
 					
 					fallingTags.setInteger("TileID", Block.getIdFromBlock(Block.getBlockFromName(tags.getString("id"))));
 					fallingTags.setInteger("Data", tags.getInteger("meta"));
@@ -108,32 +100,31 @@ public class BlockHelperItem extends Item {
 	}
 		
 	
-	private void set(int x, int y, int z, ItemStack item) {
-		if (world.getTileEntity(x, y, z) != null) {	
-			TileEntity tile = world.getTileEntity(x, y, z);		
-			tile.writeToNBT(item.stackTagCompound);
+	private void set(BlockPos pos, ItemStack item) {
+		if (world.getTileEntity(pos) != null) {
+			TileEntity tile = world.getTileEntity(pos);
+			tile.writeToNBT(item.getTagCompound());
 		}
-		setBlockTags(x, y, z, item);
+		setBlockTags(pos, item);
 	}
 	
-	private void setBlockTags(int x, int y, int z, ItemStack item) {
-		Block block = world.getBlock(x, y, z);
+	private void setBlockTags(BlockPos pos, ItemStack item) {
+		IBlockState block = world.getBlockState(pos);
 		
-		item.stackTagCompound.setString("id", Block.blockRegistry.getNameForObject(block));
-		item.stackTagCompound.setInteger("x", x);
-		item.stackTagCompound.setInteger("y", y);
-		item.stackTagCompound.setInteger("z", z);
-		item.stackTagCompound.setInteger("meta", world.getBlockMetadata(x, y, z));
+		item.getTagCompound().setString("id", Objects.toString(Block.blockRegistry.getNameForObject(block.getBlock())));
+		item.getTagCompound().setInteger("x", pos.getX());
+		item.getTagCompound().setInteger("y", pos.getY());
+		item.getTagCompound().setInteger("z", pos.getZ());
+		//item.getTagCompound().setInteger("meta", world.getBlockMetadata(x, y, z));
 	}
 	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
     public void addInformation(ItemStack itemstack, EntityPlayer player, List par3List, boolean par4) {
-        if (itemstack.stackTagCompound != null && itemstack.stackTagCompound.getString("id") != null) {
-        	String target = itemstack.stackTagCompound.getString("id");
+        if (itemstack.getTagCompound() != null && itemstack.getTagCompound().getString("id") != null) {
+        	String target = itemstack.getTagCompound().getString("id");
         	par3List.add("Target: " + target);
-
         }
     }
 	
@@ -171,7 +162,7 @@ public class BlockHelperItem extends Item {
 		this.iconArray = new IIcon[itemNamesTex.length];
 		
 		for (int i=0; i<itemNamesTex.length; i++) {
-			this.iconArray[i] = iconreg.registerIcon(this.getIconString() + "_" + itemNamesTex[i]);
+			//this.iconArray[i] = iconreg.registerIcon(this.getIconString() + "_" + itemNamesTex[i]);
 		}
 	}
 	

@@ -2,6 +2,8 @@ package sourcecoded.creativeA.commands;
 
 import java.util.ArrayList;
 
+import net.minecraft.command.CommandException;
+import net.minecraft.command.WrongUsageException;
 import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -21,7 +23,7 @@ public class RandomNCommand extends CommandBase {
 	}
 
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "randomN";
 	}
 
@@ -31,24 +33,23 @@ public class RandomNCommand extends CommandBase {
 	}
 
 	@Override
-	public int getRequiredPermissionLevel()
-    {
+	public int getRequiredPermissionLevel() {
         return 0;
     }
 
 	@Override
-	public void processCommand(ICommandSender sender, String[] astring) {
+	public void execute(ICommandSender sender, String[] args) throws CommandException {
 		player = (EntityPlayer)sender;
 		world = player.getEntityWorld();
 		
-		if (astring.length != 3) {
+		if (args.length != 3) {
 			Methods.usage(sender, this);
 		}else{
 			gen.clear();
 			
-			int minimum = Integer.parseInt(astring[0]);
-			int maximum = Integer.parseInt(astring[1]);
-			int iterator = Integer.parseInt(astring[2]);
+			int minimum = Integer.parseInt(args[0]);
+			int maximum = Integer.parseInt(args[1]);
+			int iterator = Integer.parseInt(args[2]);
 			
 			for (int i=0;i<iterator;i++) {
 				gen.add(random(minimum, maximum));

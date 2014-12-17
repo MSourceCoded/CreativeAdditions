@@ -2,6 +2,8 @@ package sourcecoded.creativeA.commands;
 
 import java.util.List;
 
+import net.minecraft.command.CommandException;
+import net.minecraft.command.WrongUsageException;
 import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -14,7 +16,7 @@ import net.minecraft.server.MinecraftServer;
 public class HeadCommand extends CommandBase {
 
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "head";
 	}
 
@@ -24,7 +26,7 @@ public class HeadCommand extends CommandBase {
 	}
 
 	@Override
-	public void processCommand(ICommandSender var1, String[] var2) {
+	public void execute(ICommandSender var1, String[] var2) throws CommandException {
 		if (var2.length != 1) {
 			Methods.usage(var1, this);
 		} else {
@@ -32,7 +34,7 @@ public class HeadCommand extends CommandBase {
 			ItemStack head = new ItemStack(Items.skull, 1, 3);
 
 			head.setTagCompound(new NBTTagCompound());
-			head.stackTagCompound.setString("SkullOwner", var2[0]);
+			head.getTagCompound().setString("SkullOwner", var2[0]);
 			
 			player.inventory.addItemStackToInventory(head);
 		}

@@ -1,6 +1,7 @@
 package sourcecoded.creativeA.commands;
 
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
@@ -15,27 +16,25 @@ public class GetTimeCommand extends CommandBase {
 	int time;
 	int totalTime;
 	int date;
-	
+
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "getTime";
 	}
-	
+
 	@Override
 	public String getCommandUsage(ICommandSender icommandsender) {
 		return "/getTime";
 	}
-	 
+
 	@Override
-	public void processCommand(ICommandSender icommandsender, String[] astring) {
-		
-		player = ((EntityPlayer)icommandsender);
+	public void execute(ICommandSender sender, String[] args) throws CommandException {
+		player = ((EntityPlayer)sender);
 		world = player.getEntityWorld();
 		
-		if (astring.length != 0) {
-			getCommandUsage(icommandsender);
+		if (args.length != 0) {
+			getCommandUsage(sender);
 		} else {
-			
             WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
             totalTime = (int)worldserver.getWorldTime();
             time = totalTime % 24000;

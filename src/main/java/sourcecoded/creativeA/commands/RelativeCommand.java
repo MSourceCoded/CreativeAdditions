@@ -2,6 +2,8 @@ package sourcecoded.creativeA.commands;
 
 import java.util.List;
 
+import net.minecraft.command.CommandException;
+import net.minecraft.command.WrongUsageException;
 import sourcecoded.creativeA.shared.Methods;
 import sourcecoded.creativeA.shared.RelativesAPI;
 import net.minecraft.command.CommandBase;
@@ -12,7 +14,7 @@ public class RelativeCommand extends CommandBase {
 
 	EntityPlayer player;
 	
-	public void relative(String separator, String[] args) {
+	public void relative(String separator, String[] args) throws WrongUsageException {
 		
 		double x = player.posX;
 		double y = player.posY;
@@ -38,9 +40,9 @@ public class RelativeCommand extends CommandBase {
 			Methods.usage(player, this);
 		}
 	}
-	
+
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "relative";
 	}
 
@@ -50,8 +52,7 @@ public class RelativeCommand extends CommandBase {
 	}
 
 	@Override
-	public void processCommand(ICommandSender var1, String[] var2) {
-		
+	public void execute(ICommandSender var1, String[] var2) throws CommandException {
 		player = (EntityPlayer)var1;
 		if (var2.length == 1) {		
 			relative(" ", var2);

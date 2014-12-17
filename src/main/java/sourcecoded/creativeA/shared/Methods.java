@@ -11,16 +11,17 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 
 public class Methods {
 	public static Clipboard userClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 	
 	public static MinecraftServer server = MinecraftServer.getServer();
-	public static String playerUsername = Minecraft.getMinecraft().thePlayer.getDisplayName();
+	public static IChatComponent playerUsername = Minecraft.getMinecraft().thePlayer.getDisplayName();
 
 	//Will throw a usage exception. ARGS: CommandSender, Command (this)
-	public static void usage(ICommandSender icommandsender, ICommand command) {
+	public static void usage(ICommandSender icommandsender, ICommand command) throws WrongUsageException {
 		throw new WrongUsageException(command.getCommandUsage(icommandsender));
 	}
 	

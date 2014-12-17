@@ -1,5 +1,6 @@
 package sourcecoded.creativeA.commands;
 
+import net.minecraft.command.CommandException;
 import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -27,9 +28,9 @@ public class CoordCommand extends CommandBase {
 		Methods.addChatMessage(player, "Current Position: " + store[0] + " " + store[1] + " " + store[2]);
 		Methods.addChatMessage(player, "Positions copied to the clipboard with the separator \" " + separator + "\"");
 	}
-	
+
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "coords";
 	}
 
@@ -37,9 +38,9 @@ public class CoordCommand extends CommandBase {
 	public String getCommandUsage(ICommandSender var1) {
 		return "/coords [separator]";
 	}
-	
+
 	@Override
-	public void processCommand(ICommandSender var1, String[] var2) {
+	public void execute(ICommandSender var1, String[] var2) throws CommandException {
 		player = (EntityPlayer)var1;
 		if (var2.length != 1 && var2.length != 0) {
 			Methods.usage(var1, this);

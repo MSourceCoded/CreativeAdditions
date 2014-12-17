@@ -1,5 +1,6 @@
 package sourcecoded.creativeA.commands;
 
+import net.minecraft.command.CommandException;
 import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -10,10 +11,8 @@ public class FacingCommand extends CommandBase {
 	EntityPlayer player;
 	int f;
 	
-	String[] facing = {"South", "South West", "West", "North West", "North", "North East", "East", "South East"};
-	
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "facing";
 	}
 
@@ -23,23 +22,18 @@ public class FacingCommand extends CommandBase {
 	}
 
 	@Override
-	public void processCommand(ICommandSender var1, String[] var2) {
-		player = (EntityPlayer)var1;
+	public int getRequiredPermissionLevel() {
+		return 0;
+	}
+
+	@Override
+	public void execute(ICommandSender sender, String[] args) throws CommandException {
+		player = (EntityPlayer)sender;
 		
-		if (var2.length != 0) {
-			Methods.usage(var1, this);
+		if (args.length != 0) {
+			Methods.usage(sender, this);
 		} else {
-			f = (int)player.rotationYaw;	//Grab the raw int of the players facing (between 0 and 360)
-			
-			if (f<0) {						//Makes sure we don't get a negative value
-				f += 360;
-			}
-			
-			f += 22;						//Offsets the value so it is centered					
-			f %= 360;						//Makes sure we don't get an extra zone when doing a full circle
-			
-			f /= 45;						//Converts the int to 8 directions (0 - 7)
-			Methods.addChatMessage(player, "You are facing: " + facing[f]);	//Will print the direction according to the facing array
+			Methods.addChatMessage(player, "You are facing: " + player.getHorizontalFacing().getName());
 		}
 	}
 
