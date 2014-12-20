@@ -1,13 +1,12 @@
 package sourcecoded.creativeA.commands;
 
-import net.minecraft.block.BlockPackedIce;
-import net.minecraft.command.CommandException;
-import net.minecraft.util.BlockPos;
-import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import sourcecoded.creativeA.shared.Methods;
 
 public class BangCommand extends CommandBase {
 

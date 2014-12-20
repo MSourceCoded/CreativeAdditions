@@ -1,8 +1,7 @@
 package sourcecoded.creativeA.item;
 
-import java.util.List;
-import java.util.Objects;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,13 +16,12 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
 import org.lwjgl.input.Keyboard;
-
 import sourcecoded.creativeA.common.Tabs;
 import sourcecoded.creativeA.shared.Methods;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
+import java.util.Objects;
 
 public class BlockHelperItem extends Item {
 

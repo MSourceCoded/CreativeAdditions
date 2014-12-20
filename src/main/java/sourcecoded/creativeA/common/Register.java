@@ -1,9 +1,7 @@
 package sourcecoded.creativeA.common;
 
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import sourcecoded.creativeA.CreativeAdditionsBase;
 import sourcecoded.creativeA.item.BlockHelperItem;
 import sourcecoded.creativeA.item.RemoteItem;
 

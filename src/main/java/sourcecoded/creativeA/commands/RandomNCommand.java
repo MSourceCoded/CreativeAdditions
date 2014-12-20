@@ -1,14 +1,13 @@
 package sourcecoded.creativeA.commands;
 
-import java.util.ArrayList;
-
-import net.minecraft.command.CommandException;
-import net.minecraft.command.WrongUsageException;
-import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import sourcecoded.creativeA.shared.Methods;
+
+import java.util.ArrayList;
 
 public class RandomNCommand extends CommandBase {
 
