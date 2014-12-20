@@ -4,7 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import sourcecoded.creativeA.client.camera.CameraCommand;
+import sourcecoded.creativeA.client.camera.TweenEvents;
+import sourcecoded.creativeA.client.camera.renderer.TweenLocationRenderer;
 import sourcecoded.creativeA.commands.FacingCommand;
 import sourcecoded.creativeA.commands.RandomNCommand;
 import sourcecoded.creativeA.common.CommonProxy;
@@ -21,9 +26,20 @@ public class ClientProxy extends CommonProxy {
         ModelBakery.addVariantName(Register.BlockHelper, "creativeadditions:setBlock", "creativeadditions:fallingSand");
     }
 
+    @Override
     public void registerClientCommands() {
         ClientCommandHandler.instance.registerCommand(new RandomNCommand());
         ClientCommandHandler.instance.registerCommand(new FacingCommand());
+
+        ClientCommandHandler.instance.registerCommand(new CameraCommand());
+    }
+
+    @Override
+    public void registerMisc() {
+        FMLCommonHandler.instance().bus().register(new TweenEvents());
+        //FMLCommonHandler.instance().bus().register(new TweenLocationRenderer());
+        MinecraftForge.EVENT_BUS.register(new TweenLocationRenderer());
+        FMLCommonHandler.instance().bus().register(new TweenLocationRenderer());
     }
 
 }

@@ -6,9 +6,12 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.relauncher.FMLInjectionData;
+import sourcecoded.creativeA.client.camera.TweenEvents;
 import sourcecoded.creativeA.common.CommonProxy;
 import sourcecoded.creativeA.common.Register;
-import sourcecoded.creativeA.event.PlayerEvents;
+
+import java.io.File;
 
 @Mod(modid = CreativeAdditionsBase.MODID, version = CreativeAdditionsBase.VERSION)
 public class CreativeAdditionsBase
@@ -21,8 +24,6 @@ public class CreativeAdditionsBase
     
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent event){
-    	FMLCommonHandler.instance().bus().register(new PlayerEvents());
-    	
     	Register.RegisterItems();
     }
     
@@ -30,10 +31,15 @@ public class CreativeAdditionsBase
     public void init(FMLInitializationEvent event){
         proxy.registerClientCommands();
         proxy.registerRenderers();
+        proxy.registerMisc();
     }
     
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
         proxy.registerServerCommands(event);
+    }
+
+    public static String getForgeRoot() {
+        return ((File) (FMLInjectionData.data()[6])).getAbsolutePath().replace(File.separatorChar, '/');
     }
 }
