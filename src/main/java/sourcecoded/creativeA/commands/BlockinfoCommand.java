@@ -1,16 +1,15 @@
 package sourcecoded.creativeA.commands;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.command.CommandException;
-import net.minecraft.util.BlockPos;
-import net.minecraftforge.common.property.IExtendedBlockState;
-import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import sourcecoded.creativeA.shared.Methods;
 
 import java.util.Objects;
 

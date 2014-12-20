@@ -1,17 +1,16 @@
 package sourcecoded.creativeA.commands;
 
-import java.util.List;
-
-import net.minecraft.command.CommandException;
-import net.minecraft.command.WrongUsageException;
-import sourcecoded.creativeA.shared.Methods;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import sourcecoded.creativeA.shared.Methods;
+
+import java.util.List;
 
 public class HeadCommand extends CommandBase {
 

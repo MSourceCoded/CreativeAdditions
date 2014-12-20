@@ -1,9 +1,13 @@
 package sourcecoded.creativeA.client.camera;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.client.FMLClientHandler;
+
+import java.util.ArrayList;
 
 public class TweenPosition {
 
@@ -18,6 +22,10 @@ public class TweenPosition {
     double rotV;
 
     public long timeOffset;
+
+    public ArrayList<String> executables = new ArrayList<String>();
+
+    public boolean triggered = false;
 
     public TweenPosition(double x, double y, double z, double camH, double camV, double rotH, double rotV) {
         this.x = x;
@@ -78,6 +86,17 @@ public class TweenPosition {
         return rotH;
     }
 
+    public void onPointActivated() {
+        EntityPlayer player = Tween.getClientPlayer();
+        Minecraft mc = Minecraft.getMinecraft();
+
+        for (String msg : executables) {
+            System.err.println(msg);
+            mc.ingameGUI.getChatGUI().addToSentMessages(msg);
+            mc.thePlayer.sendChatMessage(msg);
+        }
+    }
+
     public JsonObject toJSON(int id) {
         JsonObject object = new JsonObject();
         object.add("id", new JsonPrimitive(id));
@@ -88,11 +107,23 @@ public class TweenPosition {
         object.add("camV", new JsonPrimitive(camV));
         object.add("rotH", new JsonPrimitive(rotH));
         object.add("rotV", new JsonPrimitive(rotV));
+
+        JsonArray exec = new JsonArray();
+        for (String s : executables)
+            exec.add(new JsonPrimitive(s));
+
+        object.add("executables", exec);
         return object;
     }
 
     public static TweenPosition fromJSON(JsonObject o) {
-        return new TweenPosition(g(o, "x"), g(o, "y"), g(o, "z"), g(o, "camH"), g(o, "camV"), g(o, "rotH"), g(o, "rotV"));
+        TweenPosition position = new TweenPosition(g(o, "x"), g(o, "y"), g(o, "z"), g(o, "camH"), g(o, "camV"), g(o, "rotH"), g(o, "rotV"));
+
+        JsonArray exec = o.get("executables").getAsJsonArray();
+        for (int i = 0; i < exec.size(); i++)
+            position.executables.add(exec.get(i).getAsString());
+
+        return position;
     }
 
     static double g(JsonObject object, String member) {

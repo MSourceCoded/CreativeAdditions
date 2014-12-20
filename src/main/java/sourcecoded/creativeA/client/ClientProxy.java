@@ -6,7 +6,6 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import sourcecoded.creativeA.client.camera.CameraCommand;
 import sourcecoded.creativeA.client.camera.TweenEvents;
 import sourcecoded.creativeA.client.camera.renderer.TweenLocationRenderer;
@@ -14,7 +13,6 @@ import sourcecoded.creativeA.commands.FacingCommand;
 import sourcecoded.creativeA.commands.RandomNCommand;
 import sourcecoded.creativeA.common.CommonProxy;
 import sourcecoded.creativeA.common.Register;
-import sourcecoded.creativeA.item.BlockHelperItem;
 
 public class ClientProxy extends CommonProxy {
 

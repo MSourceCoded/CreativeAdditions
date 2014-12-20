@@ -14,6 +14,7 @@ import sourcecoded.creativeA.CreativeAdditionsBase;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CameraCommand extends CommandBase {
@@ -27,7 +28,7 @@ public class CameraCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/cam <start:stop:add:remove:clear:save:load> [pointID | seconds | name]";
+        return "/cam <start:stop:add:remove:clear:save:load:execute> [pointID | seconds | name] [command]";
     }
 
     public int getRequiredPermissionLevel() {
@@ -57,6 +58,18 @@ public class CameraCommand extends CommandBase {
             save(sender, args[1]);
         } else if (args[0].equalsIgnoreCase("load")) {
             load(sender, args[1]);
+        } else if (args[0].equalsIgnoreCase("execute")) {
+            int pointID = Integer.parseInt(args[1]);
+            ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(args));
+            argsList.remove(0);
+            argsList.remove(0);
+
+            String command = "";
+            for (String s : argsList)
+                command += s + " ";
+
+            Tween.getWaypoints().get(pointID).executables.add(command);
+            sender.addChatMessage(new ChatComponentText("Successfully added command to camera location: " + pointID));
         }
     }
 

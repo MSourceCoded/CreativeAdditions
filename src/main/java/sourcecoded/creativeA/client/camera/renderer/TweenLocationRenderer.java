@@ -1,7 +1,6 @@
 package sourcecoded.creativeA.client.camera.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -54,7 +53,6 @@ public class TweenLocationRenderer {
 
     public void renderFakePost() {
         Minecraft mc = Minecraft.getMinecraft();
-        //mc.thePlayer = (EntityPlayerSP) player;
         mc.setRenderViewEntity(player);
         rendered = false;
     }
@@ -87,7 +85,6 @@ public class TweenLocationRenderer {
         }
 
         mc.setRenderViewEntity(player);
-        //mc.thePlayer = (EntityPlayerSP) player;
 
         Tween.lastRenderPoint = position;
 
@@ -115,7 +112,6 @@ public class TweenLocationRenderer {
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
         Tessellator tessellator = Tessellator.getInstance();
         GL11.glDisable(GL11.GL_TEXTURE_2D);
-        //tessellator.startDrawingQuads();
         int ij = fr.getStringWidth(tag) / 2;
         WorldRenderer render = tessellator.getWorldRenderer();
         render.startDrawingQuads();

@@ -1,14 +1,14 @@
 package sourcecoded.creativeA.commands;
 
-import java.util.List;
-
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.entity.player.EntityPlayer;
 import sourcecoded.creativeA.shared.Methods;
 import sourcecoded.creativeA.shared.RelativesAPI;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
+
+import java.util.List;
 
 public class RelativeCommand extends CommandBase {
 

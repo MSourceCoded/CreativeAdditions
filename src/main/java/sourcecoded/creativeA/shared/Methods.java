@@ -1,9 +1,5 @@
 package sourcecoded.creativeA.shared;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -12,7 +8,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.world.World;
+
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 
 public class Methods {
 	public static Clipboard userClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

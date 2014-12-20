@@ -1,12 +1,9 @@
 package sourcecoded.creativeA.client.camera;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.Session;
-import sourcecoded.creativeA.client.camera.renderer.TweenLocationRenderer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -78,6 +75,7 @@ public class Tween {
         for (int i = 0; i < positions.size(); i++) {
             TweenPosition pos = positions.get(i);
             pos.timeOffset = i * timePerPosition;
+            pos.triggered = false;
         }
 
         removablePositions = new ArrayList<TweenPosition>();
@@ -106,6 +104,11 @@ public class Tween {
         }
 
         lastLandmark = removablePositions.get(0);
+
+        if (!lastLandmark.triggered) {
+            lastLandmark.onPointActivated();
+            lastLandmark.triggered = true;
+        }
 
         TweenPosition nextPosition = removablePositions.get(1);
         long startOfPath = lastLandmark.timeOffset;
