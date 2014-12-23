@@ -7,7 +7,6 @@ import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import sourcecoded.creativeA.client.camera.CameraCommand;
-import sourcecoded.creativeA.client.camera.TweenEvents;
 import sourcecoded.creativeA.client.camera.renderer.TweenLocationRenderer;
 import sourcecoded.creativeA.commands.FacingCommand;
 import sourcecoded.creativeA.commands.RandomNCommand;
@@ -34,8 +33,6 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void registerMisc() {
-        FMLCommonHandler.instance().bus().register(new TweenEvents());
-        //FMLCommonHandler.instance().bus().register(new TweenLocationRenderer());
         MinecraftForge.EVENT_BUS.register(new TweenLocationRenderer());
         FMLCommonHandler.instance().bus().register(new TweenLocationRenderer());
     }

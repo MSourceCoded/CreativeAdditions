@@ -11,7 +11,7 @@ public class Register {
 	
 	public static void RegisterItems() {
 		GameRegistry.registerItem(Remote, "remote");
-		GameRegistry.registerItem(BlockHelper, "BlockHelper");
+		//GameRegistry.registerItem(BlockHelper, "BlockHelper");
 	}
 	
 }

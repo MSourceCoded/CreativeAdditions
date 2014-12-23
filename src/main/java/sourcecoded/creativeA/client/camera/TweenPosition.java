@@ -91,7 +91,6 @@ public class TweenPosition {
         Minecraft mc = Minecraft.getMinecraft();
 
         for (String msg : executables) {
-            System.err.println(msg);
             mc.ingameGUI.getChatGUI().addToSentMessages(msg);
             mc.thePlayer.sendChatMessage(msg);
         }

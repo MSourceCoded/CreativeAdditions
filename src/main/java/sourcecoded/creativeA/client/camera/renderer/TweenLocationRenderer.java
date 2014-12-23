@@ -1,7 +1,10 @@
 package sourcecoded.creativeA.client.camera.renderer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -20,7 +23,7 @@ public class TweenLocationRenderer {
 
     RenderManager rm;
     FontRenderer fr;
-    EntityPlayer player;
+    EntityPlayer oldplayer;
     boolean rendered;
 
     @SubscribeEvent
@@ -53,14 +56,14 @@ public class TweenLocationRenderer {
 
     public void renderFakePost() {
         Minecraft mc = Minecraft.getMinecraft();
-        mc.setRenderViewEntity(player);
+        mc.setRenderViewEntity(oldplayer);
         rendered = false;
     }
 
     public void renderFake(TweenPosition position, TickEvent.RenderTickEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
 
-        this.player = mc.thePlayer;
+        this.oldplayer = mc.thePlayer;
 
         EntityPlayer player = Tween.getView();
         player.posX = position.getX();
@@ -82,6 +85,10 @@ public class TweenLocationRenderer {
 
             player.prevCameraYaw = (float) Tween.lastRenderPoint.getCamH();
             player.prevCameraPitch = (float) Tween.lastRenderPoint.getCamV();
+
+            EntityFX.interpPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double)event.renderTickTime;
+            EntityFX.interpPosY = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double)event.renderTickTime;
+            EntityFX.interpPosZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double)event.renderTickTime;
         }
 
         mc.setRenderViewEntity(player);
@@ -92,42 +99,46 @@ public class TweenLocationRenderer {
     }
 
     public void renderTag(String tag, double xp, double yp, double zp, EntityPlayer player, float ptt) {
-        float f = 1.6F;
-        float f1 = 0.016666668F * f;
 
         float x = (float) (xp - (player.prevPosX + (player.posX - player.prevPosX) * ptt));
         float y = (float) (yp - (player.prevPosY + (player.posY - player.prevPosY) * ptt));
         float z = (float) (zp - (player.prevPosZ + (player.posZ - player.prevPosZ) * ptt));
 
-        GL11.glPushMatrix();
-        GL11.glTranslatef((float)(x + 0.5F), (float)(y + 1.5F), (float)(z + 0.5F));
+        float f = 1.6F;
+        float f1 = 0.016666668F * f;
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((float)x + 0.0F, (float)y + 0.5F, (float)z);
         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-        GL11.glRotatef(-this.rm.playerViewY, 0.0F, 1.0F, 0.0F);
-        GL11.glRotatef(this.rm.playerViewX, 1.0F, 0.0F, 0.0F);
-        GL11.glScalef(-f1, -f1, f1);
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glTranslatef(0.0F, 0.25F / f1, 0.0F);
-        GL11.glDepthMask(false);
-        GL11.glEnable(GL11.GL_BLEND);
-        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+        GlStateManager.rotate(-this.rm.playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(this.rm.playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(-f1, -f1, f1);
+        GlStateManager.disableLighting();
+        GlStateManager.depthMask(false);
+        GlStateManager.disableDepth();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         Tessellator tessellator = Tessellator.getInstance();
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        int ij = fr.getStringWidth(tag) / 2;
-        WorldRenderer render = tessellator.getWorldRenderer();
-        render.startDrawingQuads();
-        render.setColorRGBA_F(1F, 0F, 1F, 0.25F);
-        render.addVertex((double) (-ij - 1), -1.0D, 0.0D);
-        render.addVertex((double)(-ij - 1), 8.0D, 0.0D);
-        render.addVertex((double)(ij + 1), 8.0D, 0.0D);
-        render.addVertex((double) (ij + 1), -1.0D, 0.0D);
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        byte b0 = 0;
+
+        GlStateManager.disableTexture2D();
+        worldrenderer.startDrawingQuads();
+        int j = fr.getStringWidth(tag) / 2;
+        worldrenderer.setColorRGBA_F(1F, 0.0F, 0.7F, 0.25F);
+        worldrenderer.addVertex((double)(-j - 1), (double) (-1 + b0), 0.0D);
+        worldrenderer.addVertex((double)(-j - 1), (double) (8 + b0), 0.0D);
+        worldrenderer.addVertex((double)(j + 1), (double)(8 + b0), 0.0D);
+        worldrenderer.addVertex((double)(j + 1), (double)(-1 + b0), 0.0D);
         tessellator.draw();
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDepthMask(true);
-        fr.drawString(tag, -fr.getStringWidth(tag) / 2, 0, 16777215);
-        GL11.glEnable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glPopMatrix();
+        GlStateManager.enableTexture2D();
+        fr.drawString(tag, -fr.getStringWidth(tag) / 2, b0, 553648127);
+        GlStateManager.enableDepth();
+        GlStateManager.depthMask(true);
+        fr.drawString(tag, -fr.getStringWidth(tag) / 2, b0, -1);
+        GlStateManager.enableLighting();
+        GlStateManager.disableBlend();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.popMatrix();
     }
 
 }

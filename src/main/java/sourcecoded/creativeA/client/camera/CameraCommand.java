@@ -133,7 +133,7 @@ public class CameraCommand extends CommandBase {
 
     public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
         if (args.length == 1)
-            return getListOfStringsMatchingLastWord(args, "add", "start", "stop", "remove", "clear", "save", "load");
+            return getListOfStringsMatchingLastWord(args, "add", "start", "stop", "execute", "remove", "clear", "save", "load");
         else return null;
     }
 }
