@@ -1,6 +1,7 @@
 package sourcecoded.creativeA.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -21,6 +22,10 @@ public class ClientProxy extends CommonProxy {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Register.BlockHelper, 0, new ModelResourceLocation("creativeadditions:setBlock", "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Register.BlockHelper, 1, new ModelResourceLocation("creativeadditions:fallingSand", "inventory"));
         ModelBakery.addVariantName(Register.BlockHelper, "creativeadditions:setBlock", "creativeadditions:fallingSand");
+    }
+
+    public EntityPlayerSP getClientPlayer() {
+        return Minecraft.getMinecraft().thePlayer;
     }
 
     @Override

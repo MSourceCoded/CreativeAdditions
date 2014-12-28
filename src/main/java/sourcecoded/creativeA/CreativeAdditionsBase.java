@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
 import sourcecoded.creativeA.common.CommonProxy;
 import sourcecoded.creativeA.common.Register;
+import sourcecoded.creativeA.network.NetHandler;
 
 import java.io.File;
 
@@ -30,6 +31,8 @@ public class CreativeAdditionsBase
         proxy.registerClientCommands();
         proxy.registerRenderers();
         proxy.registerMisc();
+
+        NetHandler.init();
     }
     
     @Mod.EventHandler

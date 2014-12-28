@@ -11,6 +11,9 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import sourcecoded.creativeA.CreativeAdditionsBase;
+import sourcecoded.creativeA.network.MsgPathRequest;
+import sourcecoded.creativeA.network.MsgPathToServer;
+import sourcecoded.creativeA.network.NetHandler;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -19,7 +22,9 @@ import java.util.List;
 
 public class CameraCommand extends CommandBase {
 
-    static String fileExtention = ".path";
+    public static String fileExtension = ".path";
+
+    public static File ca = new File(CreativeAdditionsBase.getForgeRoot(), "creativeadditions");
 
     @Override
     public String getName() {
@@ -28,7 +33,7 @@ public class CameraCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/cam <start:stop:add:remove:clear:save:load:execute> [pointID | seconds | name] [command]";
+        return "/cam <start:stop:add:remove:clear:save:load:execute:net> [pointID | seconds | name] [command]";
     }
 
     public int getRequiredPermissionLevel() {
@@ -70,10 +75,16 @@ public class CameraCommand extends CommandBase {
 
             Tween.getWaypoints().get(pointID).executables.add(command);
             sender.addChatMessage(new ChatComponentText("Successfully added command to camera location: " + pointID));
+        } else if (args[0].equalsIgnoreCase("net")) {
+            if (args[1].equalsIgnoreCase("save")) {
+                NetHandler.wrapper.sendToServer(new MsgPathToServer(savePath(), args[2]));
+            } else if (args[1].equalsIgnoreCase("load")) {
+                NetHandler.wrapper.sendToServer(new MsgPathRequest(args[2]));
+            }
         }
     }
 
-    void save(ICommandSender sender, String name) {
+    public static String savePath() {
         JsonObject master = new JsonObject();
         JsonArray array = new JsonArray();
         ArrayList<TweenPosition> way = Tween.getWaypoints();
@@ -82,25 +93,43 @@ public class CameraCommand extends CommandBase {
         }
         master.add("waypoints", array);
 
-        File ca = new File(CreativeAdditionsBase.getForgeRoot(), "creativeadditions");
+        return master.toString();
+    }
+
+    void save(ICommandSender sender, String name) {
+        String path = savePath();
         ca.mkdir();
 
-        File save = new File(ca, name + fileExtention);
+        File save = new File(ca, name + fileExtension);
         try {
             FileWriter writer = new FileWriter(save);
-            writer.write(master.toString());
+            writer.write(path);
             writer.close();
 
-            sender.addChatMessage(new ChatComponentText("Saved Camera Path to JSON: " + name + fileExtention));
+            sender.addChatMessage(new ChatComponentText("Saved Camera Path to JSON: " + name + fileExtension));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
+    public static ArrayList<TweenPosition> loadPath(String json) {
+        JsonElement element = new JsonParser().parse(json);
+        JsonObject obj = element.getAsJsonObject();
+        JsonArray array = obj.get("waypoints").getAsJsonArray();
+
+        ArrayList<TweenPosition> positions = new ArrayList<TweenPosition>();
+        for (int i = 0; i < array.size(); i++) {
+            JsonObject object = array.get(i).getAsJsonObject();
+            int id = object.get("id").getAsInt();
+            positions.add(i, TweenPosition.fromJSON(object));
+        }
+
+        return positions;
+    }
+
     void load(ICommandSender sender, String name) {
-        File ca = new File(CreativeAdditionsBase.getForgeRoot(), "creativeadditions");
-        File save = new File(ca, name + fileExtention);
+        File save = new File(ca, name + fileExtension);
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(save));
@@ -110,22 +139,11 @@ public class CameraCommand extends CommandBase {
                 jsonString += nextLine;
             }
 
-            JsonElement element = new JsonParser().parse(jsonString);
-            JsonObject obj = element.getAsJsonObject();
-            JsonArray array = obj.get("waypoints").getAsJsonArray();
-
-            ArrayList<TweenPosition> positions = new ArrayList<TweenPosition>();
-            for (int i = 0; i < array.size(); i++) {
-                JsonObject object = array.get(i).getAsJsonObject();
-                int id = object.get("id").getAsInt();
-                positions.add(i, TweenPosition.fromJSON(object));
-            }
-
-            Tween.setWaypoints(positions);
+            Tween.setWaypoints(loadPath(jsonString));
 
             reader.close();
 
-            sender.addChatMessage(new ChatComponentText("Loaded Camera Path from JSON: " + name + fileExtention));
+            sender.addChatMessage(new ChatComponentText("Loaded Camera Path from JSON: " + name + fileExtension));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -133,7 +151,9 @@ public class CameraCommand extends CommandBase {
 
     public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
         if (args.length == 1)
-            return getListOfStringsMatchingLastWord(args, "add", "start", "stop", "execute", "remove", "clear", "save", "load");
+            return getListOfStringsMatchingLastWord(args, "add", "start", "stop", "execute", "remove", "clear", "save", "load", "net");
+        if (args.length == 2 && args[0].equalsIgnoreCase("net"))
+            return getListOfStringsMatchingLastWord(args, "save", "load");
         else return null;
     }
 }
