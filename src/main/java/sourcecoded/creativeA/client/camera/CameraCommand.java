@@ -45,9 +45,23 @@ public class CameraCommand extends CommandBase {
         if (args.length == 0) throw new WrongUsageException(getCommandUsage(sender));
 
         if (args[0].equalsIgnoreCase("start")) {
+        	
             int tweenTime = Integer.parseInt(args[1]);
             tweenTime = Math.abs(tweenTime);
             if (tweenTime == 0) throw new WrongUsageException("Your tween time can't be 0 >:C");
+            
+            if ( args.length > 1 )
+            {
+	            if ( args[2].equalsIgnoreCase("true") )
+	            {
+	            	Tween.smooth = true;
+	            } else {
+	            	Tween.smooth = false;
+	            }
+            } else {
+            	Tween.smooth = false;
+            }
+            
             Tween.beginTween(tweenTime);
         } else if (args[0].equalsIgnoreCase("stop")) {
             Tween.stop();

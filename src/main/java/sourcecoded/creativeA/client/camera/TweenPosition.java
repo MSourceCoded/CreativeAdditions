@@ -57,6 +57,32 @@ public class TweenPosition {
 
         return new TweenPosition(x, y, z, camH, camV, rotH, rotV);
     }
+    
+    public static TweenPosition cubicInterpolate(TweenPosition before, TweenPosition base, TweenPosition target, TweenPosition after, float progress) {
+        
+        double x = cubic1DInterpolate(before.getX(), base.getX(), target.getX(), after.getX(), progress);
+        double y = cubic1DInterpolate(before.getY(), base.getY(), target.getY(), after.getY(), progress);
+        double z = cubic1DInterpolate(before.getZ(), base.getZ(), target.getZ(), after.getZ(), progress);
+
+        double camH = cubic1DInterpolate(before.getCamH(), base.getCamH(), target.getCamH(), after.getCamH(), progress);
+        double camV = cubic1DInterpolate(before.getCamV(), base.getCamV(), target.getCamV(), after.getCamV(), progress);
+
+        double rotH = cubic1DInterpolate(before.getRotH(), base.getRotH(), target.getRotH(), after.getRotH(), progress);
+        double rotV = cubic1DInterpolate(before.getRotV(), base.getRotV(), target.getRotV(), after.getRotV(), progress);
+
+        return new TweenPosition(x, y, z, camH, camV, rotH, rotV);
+    }
+    
+    private static double cubic1DInterpolate(double x0, double x1, double x2, double x3, double progress)
+    {
+    	double progress2 = progress*progress;
+    	double a0 = x3 - x2 - x0 + x1;
+    	double a1 = x0 - x1 - a0;
+    	double a2 = x2 - x0;
+    	double a3 = x1;
+
+	   return( a0*progress*progress2 + a1*progress2 + a2*progress + a3);
+    }
 
     public double getX() {
         return x;

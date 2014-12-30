@@ -11,16 +11,15 @@ import java.util.Iterator;
 public class Tween {
 
     private static ArrayList<TweenPosition> positions = new ArrayList<TweenPosition>();
-    private static ArrayList<TweenPosition> removablePositions;
     private static EntityPlayerSP fakeViewEntity;
     private static boolean tween = false;
     private static long startTime = 0L;
     private static int tweenTime = 0;
     private static int tweenTimePer;
     private static long endTime;
-    private static TweenPosition lastLandmark;
     private static long totalElapse;
     public static TweenPosition lastRenderPoint;
+    public static boolean smooth = false;
 
     public static void add(TweenPosition pos) {
         positions.add(pos);
@@ -78,49 +77,62 @@ public class Tween {
             pos.triggered = false;
         }
 
-        removablePositions = new ArrayList<TweenPosition>();
-        removablePositions.addAll(positions);
         getClientPlayer().addChatComponentMessage(new ChatComponentText("Camera Tween Begun"));
     }
 
     public static TweenPosition getCurrentPosition() {
         long currentTime = System.currentTimeMillis();
         long allElapsed = currentTime - startTime;
-        long elapsedTime = (currentTime - startTime) - totalElapse;
-
-        Iterator<TweenPosition> it = removablePositions.iterator();
-        while (it.hasNext()) {
-            TweenPosition pos = it.next();
-            if (allElapsed >= (pos.timeOffset + tweenTimePer)) {
-                it.remove();
-                totalElapse += elapsedTime;
-                elapsedTime = (currentTime - startTime) - totalElapse;
-            }
-        }
-
-        if (removablePositions.size() <= 1 || currentTime > endTime) {
+        int tweenPos = (int) (allElapsed / (double) tweenTimePer);
+        long elapsedInPeriod = (currentTime - startTime) - (tweenTimePer * tweenPos);
+        
+        if (tweenPos > positions.size() - 2)
+        {
             stop();
             return null;
         }
 
-        lastLandmark = removablePositions.get(0);
+        TweenPosition basePos = positions.get(tweenPos);
 
-        if (!lastLandmark.triggered) {
-            lastLandmark.onPointActivated();
-            lastLandmark.triggered = true;
+        if (!basePos.triggered) {
+            basePos.onPointActivated();
+            basePos.triggered = true;
         }
 
-        TweenPosition nextPosition = removablePositions.get(1);
-        long startOfPath = lastLandmark.timeOffset;
-        long endOfPath = nextPosition.timeOffset;
-        float currentProgress = (float)elapsedTime / (float)(endOfPath - startOfPath);
-        return TweenPosition.interpolate(lastLandmark, nextPosition, currentProgress);
+        TweenPosition targetPos = positions.get(tweenPos + 1);
+        long startOfPath = basePos.timeOffset;
+        long endOfPath = targetPos.timeOffset;
+        float currentProgress = (float)elapsedInPeriod / (float)(endOfPath - startOfPath);
+        
+        if (smooth)
+        {
+        	TweenPosition preBasePos;
+        	TweenPosition afterTargetPos;
+        	
+        	if (tweenPos < 1 )
+        	{
+        		preBasePos = basePos;
+        	} else {
+        		preBasePos = positions.get(tweenPos - 1);
+        	}
+        	
+        	
+        	if (tweenPos > positions.size() - 3)
+        	{
+        		afterTargetPos = targetPos;
+        	} else {
+        		afterTargetPos = positions.get(tweenPos + 2);
+        	}
+        	
+        	return TweenPosition.cubicInterpolate(preBasePos, basePos, targetPos, afterTargetPos, currentProgress);
+        } else {
+        	return TweenPosition.interpolate(basePos, targetPos, currentProgress);
+        }
     }
 
     public static void stop() {
         totalElapse = 0;
         tween = false;
-        removablePositions.clear();
         getClientPlayer().addChatComponentMessage(new ChatComponentText("Camera Tween Ended"));
     }
 
